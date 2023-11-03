@@ -67,21 +67,21 @@ class _SplashScreenState extends State<SplashScreen> {
     VariableUtilities.screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: VariableUtilities.theme.green,
+      backgroundColor: VariableUtilities.theme.blue,
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 140,
-            width: 140,
+            height: 140.hPr(context),
+            width: 140.wPr(context),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: VariableUtilities.theme.white,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.hPr(context)),
           Text(
             'Healthy Diet',
             style: FontUtilities.style(

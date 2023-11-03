@@ -19,5 +19,5 @@ extension RatioExtension on num {
               (MediaQuery.of(context).devicePixelRatio *
                   MediaQuery.of(context).size.aspectRatio)) /
           2.08) /
-      100;
+      50;
 }

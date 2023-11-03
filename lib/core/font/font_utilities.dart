@@ -20,7 +20,7 @@ class FontUtilities {
       fontSize: fontSize,
       letterSpacing: letterSpacing,
       decoration: decoration,
-      fontFamily: fontFamily ?? 'Urbanist',
+      fontFamily: fontFamily ?? 'Poppins',
     );
   }
 }

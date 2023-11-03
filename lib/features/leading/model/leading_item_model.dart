@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 class LeadingItemModel {
   final String title;
-  final IconData icon;
+  final String icon;
   final int index;
 
   LeadingItemModel({

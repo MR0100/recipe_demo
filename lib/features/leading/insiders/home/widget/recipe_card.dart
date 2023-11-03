@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/core.dart';
 
@@ -19,10 +20,17 @@ class RecipeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
+        margin: EdgeInsets.only(bottom: 25.hPr(context)),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
           color: VariableUtilities.theme.white,
+          boxShadow: [
+            BoxShadow(
+              color: VariableUtilities.theme.black.withOpacity(0.1),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -31,26 +39,26 @@ class RecipeCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
               ),
               child: SizedBox(
-                height: 150,
+                height: 150.hPr(context),
                 width: double.infinity,
                 child: Stack(
                   children: [
                     Image(
                       image: NetworkImage(imageUrl),
                       fit: BoxFit.fill,
-                      height: 150,
+                      height: 150.hPr(context),
                       width: double.infinity,
                     ),
                     Align(
-                      alignment: const Alignment(0.95, 0.9),
+                      alignment: const Alignment(0.9, 0.8),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.wPr(context),
+                          vertical: 6.hPr(context),
                         ),
                         decoration: BoxDecoration(
                           color: VariableUtilities.theme.white,
@@ -59,16 +67,21 @@ class RecipeCard extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              Icons.access_time_outlined,
-                              color: VariableUtilities.theme.darkGray,
-                              size: 12,
+                            SvgPicture.asset(
+                              AssetUtilities.clockOutlinedSvg,
+                              width: 14.wPr(context),
+                              height: 14.hPr(context),
+                              fit: BoxFit.contain,
+                              colorFilter: ColorFilter.mode(
+                                VariableUtilities.theme.gray,
+                                BlendMode.srcIn,
+                              ),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 4.wPr(context)),
                             Text(
                               prepTime,
                               style: FontUtilities.style(
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontColor: VariableUtilities.theme.darkGray,
                               ),
                             ),
@@ -81,14 +94,11 @@ class RecipeCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 16,
-              ),
+              padding: EdgeInsets.all(12.wPr(context)),
               child: Text(
                 title,
                 style: FontUtilities.style(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FWT.semiBold,
                 ),
               ),

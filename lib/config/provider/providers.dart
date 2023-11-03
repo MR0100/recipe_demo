@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:recipe_demo/features/leading/provider/leading_provider.dart';
+import 'package:recipe_demo/features/recipe/provider/recipe_provider.dart';
 
 import '../../features/users/provider/user_provider.dart';
 
@@ -12,6 +13,9 @@ class Providers {
     ),
     ChangeNotifierProvider<LeadingProvider>(
       create: (_) => LeadingProvider(),
+    ),
+    ChangeNotifierProvider<RecipeProvider>(
+      create: (_) => RecipeProvider(),
     ),
   ];
 }

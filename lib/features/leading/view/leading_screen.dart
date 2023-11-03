@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipe_demo/core/core.dart';
 import 'package:recipe_demo/features/leading/data/leading_data.dart';
 import 'package:recipe_demo/features/leading/provider/leading_provider.dart';
@@ -38,27 +39,78 @@ class _LeadingScreenState extends State<LeadingScreen> {
       ),
       bottomNavigationBar:
           Consumer<LeadingProvider>(builder: (context, leadingProvider, child) {
-        return BottomNavigationBar(
-          onTap: (value) {
-            leadingProvider.changeIndex(value);
-          },
-          currentIndex: leadingProvider.selectedPageIndex,
-          showUnselectedLabels: true,
-          showSelectedLabels: true,
-          iconSize: 20,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          elevation: 10,
-          backgroundColor: VariableUtilities.theme.white,
-          selectedItemColor: VariableUtilities.theme.black,
-          unselectedItemColor: VariableUtilities.theme.gray,
-          items: List.generate(
-            LeadingData.items.length,
-            (index) => BottomNavigationBarItem(
-              label: LeadingData.items[index].title,
-              icon: Icon(
-                LeadingData.items[index].icon,
+        return Container(
+          height: 80.hPr(context),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: VariableUtilities.theme.white,
+            boxShadow: [
+              BoxShadow(
+                color: VariableUtilities.theme.black.withOpacity(0.1),
+                blurRadius: 5,
               ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              LeadingData.items.length,
+              (index) {
+                bool isSelected = leadingProvider.selectedPageIndex ==
+                    LeadingData.items[index].index;
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      leadingProvider.changeIndex(index);
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 4.hPr(context),
+                              horizontal: 20.wPr(context),
+                            ),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? VariableUtilities.theme.blue
+                                      .withOpacity(0.2)
+                                  : null,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: SvgPicture.asset(
+                              LeadingData.items[index].icon,
+                              height: 24.hPr(context),
+                              width: 24.wPr(context),
+                              colorFilter: ColorFilter.mode(
+                                isSelected
+                                    ? VariableUtilities.theme.blue
+                                    : VariableUtilities.theme.gray,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 3.hPr(context)),
+                          Text(
+                            LeadingData.items[index].title,
+                            style: FontUtilities.style(
+                              fontSize: 12,
+                              fontColor: isSelected
+                                  ? VariableUtilities.theme.blue
+                                  : VariableUtilities.theme.gray,
+                            ),
+                          ),
+                          SizedBox(height: 20.hPr(context)),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         );

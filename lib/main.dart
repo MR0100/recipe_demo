@@ -85,7 +85,7 @@ class _recipe_appApplicationState extends State<recipe_appApplication> {
             scaffoldBackgroundColor: VariableUtilities.theme.white,
 
             /// this is the default font used for the application.
-            fontFamily: 'Urbanist',
+            fontFamily: 'Poppins',
             textSelectionTheme: TextSelectionThemeData(
               cursorColor: VariableUtilities.theme.blue,
               selectionColor: VariableUtilities.theme.blue,

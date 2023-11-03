@@ -21,7 +21,7 @@ PreferredSizeWidget customAppBar({
                   Navigator.pop(context);
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(left: 12.0.wPr(context)),
+                  padding: EdgeInsets.only(left: 12.wPr(context)),
                   child: Icon(
                     Icons.arrow_back,
                     color: VariableUtilities.theme.black,
@@ -33,7 +33,11 @@ PreferredSizeWidget customAppBar({
         elevation: 0,
         title: Text(
           title,
-          style: FontUtilities.style(fontSize: 18, fontWeight: FWT.bold),
+          style: FontUtilities.style(
+            fontSize: 22,
+            fontWeight: FWT.medium,
+            fontColor: VariableUtilities.theme.darkGray,
+          ),
         ),
         actions: actions != null
             ? [

@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipe_demo/config/config.dart';
 import 'package:recipe_demo/core/core.dart';
 import 'package:recipe_demo/features/leading/insiders/home/data/home_data.dart';
@@ -13,18 +13,23 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: VariableUtilities.theme.lightGray,
       appBar: customAppBar(
-        title: 'Home',
+        title: 'Favorites',
         context: context,
         backgroundColor: VariableUtilities.theme.lightGray,
         isBackButton: false,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              CupertinoIcons.chat_bubble_text,
-              color: Colors.black,
+          Padding(
+            padding: EdgeInsets.only(right: 16.wPr(context)),
+            child: SvgPicture.asset(
+              AssetUtilities.chatBubbleOutlinedSvg,
+              height: 24.hPr(context),
+              width: 24.wPr(context),
+              colorFilter: ColorFilter.mode(
+                VariableUtilities.theme.darkGray,
+                BlendMode.srcIn,
+              ),
             ),
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -35,28 +40,22 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text(
-                    "My Recipe List 1",
-                    style: FontUtilities.style(
-                      fontSize: 18,
-                      fontWeight: FWT.semiBold,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.keyboard_arrow_down_outlined)
-                ],
-              ),
+              SizedBox(height: 20.hPr(context)),
               const SizedBox(height: 16),
               CustomSearchTextField(
                 controller: TextEditingController(),
                 hintText: 'Search Recipe',
-                suffixIcon:
-                    const Icon(CupertinoIcons.square_fill_line_vertical_square),
+                suffixIcon: SvgPicture.asset(
+                  AssetUtilities.filterOutlinedSvg,
+                  height: 24.hPr(context),
+                  width: 24.wPr(context),
+                  colorFilter: ColorFilter.mode(
+                    VariableUtilities.theme.darkGray,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.hPr(context)),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

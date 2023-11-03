@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipe_demo/core/core.dart';
 import 'package:recipe_demo/features/leading/insiders/home/model/recipe_model.dart';
+import 'package:recipe_demo/features/recipe/data/recipe_data.dart';
+import 'package:recipe_demo/features/recipe/provider/recipe_provider.dart';
+import 'package:recipe_demo/features/recipe/widget/ingredient_table.dart';
+
+import '../../../config/config.dart';
 
 class RecipeDetailsScreen extends StatelessWidget {
   final RecipeModel recipe;
@@ -18,148 +24,199 @@ class RecipeDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 300,
+              height: 297.hPr(context),
               width: double.infinity,
               child: Stack(
                 children: [
                   Image(
                     image: NetworkImage(recipe.imageUrl),
                     width: double.infinity,
-                    height: 300,
+                    height: 297.hPr(context),
                     fit: BoxFit.fill,
                   ),
                   Align(
                     alignment: const Alignment(0.9, 0.9),
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      height: 38.hPr(context),
+                      width: 38.wPr(context),
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: VariableUtilities.theme.white,
+                        border: Border.all(
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                          color: VariableUtilities.theme.white.withOpacity(0.5),
+                          width: 3.wPr(context),
+                        ),
                       ),
-                      child: Icon(
-                        Icons.share,
-                        color: VariableUtilities.theme.darkGray,
+                      child: SvgPicture.asset(
+                        AssetUtilities.shareOutlinedSvg,
+                        height: 24.hPr(context),
+                        width: 24.wPr(context),
+                        colorFilter: ColorFilter.mode(
+                          VariableUtilities.theme.darkGray,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 16.hPr(context)),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  Text(
-                    recipe.title,
-                    style: FontUtilities.style(
-                      fontSize: 18,
-                      fontWeight: FWT.semiBold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.access_time_outlined,
-                        color: VariableUtilities.theme.darkGray,
-                        size: 15,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        recipe.prepTime,
-                        style: FontUtilities.style(
-                          fontSize: 14,
-                          fontColor: VariableUtilities.theme.darkGray,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.fireplace_rounded,
-                        color: VariableUtilities.theme.darkGray,
-                        size: 15,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        recipe.calories,
-                        style: FontUtilities.style(
-                          fontSize: 14,
-                          fontColor: VariableUtilities.theme.darkGray,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: VariableUtilities.theme.white,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ingredients",
-                          style: FontUtilities.style(
-                            fontSize: 16,
-                            fontWeight: FWT.semiBold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(height: 30),
-                                SizedBox(
-                                  width: 20,
-                                  child: Text(
-                                    (index + 1).toString(),
-                                    style: FontUtilities.style(
-                                      fontSize: 12,
-                                      fontColor:
-                                          VariableUtilities.theme.darkGray,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  recipe.ingredients[index],
-                                  style: FontUtilities.style(
-                                    fontSize: 14,
-                                    fontWeight: FWT.medium,
-                                    fontColor: VariableUtilities.theme.black,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                          itemCount: recipe.ingredients.length,
-                          separatorBuilder: (context, index) {
-                            return const Divider();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 36),
-                ],
+              padding: EdgeInsets.symmetric(horizontal: 16.wPr(context)),
+              child: Text(
+                recipe.title,
+                style: FontUtilities.style(
+                  fontSize: 18,
+                  fontWeight: FWT.medium,
+                  fontColor: VariableUtilities.theme.darkGray,
+                ),
               ),
-            )
+            ),
+            SizedBox(height: 16.hPr(context)),
+            _tccArea(context),
+            SizedBox(height: 16.hPr(context)),
+            _categoryList(context),
+            SizedBox(height: 16.hPr(context)),
+            IngredientTable(recipe: recipe),
+            SizedBox(height: 36.hPr(context)),
           ],
         ),
       ),
     );
   }
+
+  Widget _tccArea(BuildContext context) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.wPr(context)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              AssetUtilities.clockOutlinedSvg,
+              width: 16.wPr(context),
+              height: 16.hPr(context),
+              fit: BoxFit.contain,
+              colorFilter: ColorFilter.mode(
+                VariableUtilities.theme.gray,
+                BlendMode.srcIn,
+              ),
+            ),
+            SizedBox(width: 8.wPr(context)),
+            Text(
+              recipe.prepTime,
+              style: FontUtilities.style(
+                fontSize: 16,
+                fontColor: VariableUtilities.theme.darkGray,
+              ),
+            ),
+            SizedBox(width: 16.wPr(context)),
+            SvgPicture.asset(
+              AssetUtilities.caloriesOutlinedSvg,
+              width: 16.wPr(context),
+              height: 16.hPr(context),
+              fit: BoxFit.contain,
+              colorFilter: ColorFilter.mode(
+                VariableUtilities.theme.gray,
+                BlendMode.srcIn,
+              ),
+            ),
+            SizedBox(width: 8.wPr(context)),
+            Text(
+              recipe.calories,
+              style: FontUtilities.style(
+                fontSize: 16,
+                fontColor: VariableUtilities.theme.darkGray,
+              ),
+            ),
+            const Spacer(),
+            Consumer<RecipeProvider>(builder: (context, recipeProvider, child) {
+              return Container(
+                height: 42.hPr(context),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.hPr(context),
+                  vertical: 10.wPr(context),
+                ),
+                decoration: BoxDecoration(
+                  color: VariableUtilities.theme.white,
+                  borderRadius: BorderRadius.circular(40.hPr(context)),
+                  border: Border.all(
+                    color: VariableUtilities.theme.gray.withOpacity(0.2),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: recipeProvider.decreaseQty,
+                      child: Icon(
+                        Icons.remove,
+                        color: VariableUtilities.theme.orange,
+                      ),
+                    ),
+                    SizedBox(width: 15.wPr(context)),
+                    SizedBox(
+                      width: 20.wPr(context),
+                      child: Text(
+                        recipeProvider.qty.toString(),
+                        style: FontUtilities.style(
+                          fontSize: 16,
+                          fontColor: VariableUtilities.theme.darkGray,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(width: 15.wPr(context)),
+                    GestureDetector(
+                      onTap: recipeProvider.increaseQty,
+                      child: Icon(
+                        Icons.add,
+                        color: VariableUtilities.theme.orange,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
+        ),
+      );
+
+  Widget _categoryList(BuildContext context) => SizedBox(
+        height: 30.hPr(context),
+        child: ListView.separated(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: 16.wPr(context)),
+          itemCount: RecipeData.items.length,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 15.wPr(context),
+                vertical: 6.hPr(context),
+              ),
+              decoration: BoxDecoration(
+                color: VariableUtilities.theme.white,
+                borderRadius: BorderRadius.circular(20.hPr(context)),
+                border: Border.all(
+                  color: VariableUtilities.theme.gray.withOpacity(0.2),
+                ),
+              ),
+              child: Text(
+                RecipeData.items[index],
+                style: FontUtilities.style(
+                  fontSize: 12,
+                  fontColor: VariableUtilities.theme.darkGray,
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(width: 6.wPr(context));
+          },
+        ),
+      );
 }

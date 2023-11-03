@@ -9,9 +9,9 @@ class DarkTheme extends ThemeBase {
       : super(
           white: const Color(0xFFFFFFFF),
           black: const Color(0xFF1E1E1E),
-          darkGray: const Color(0xFF6C6C6C),
-          gray: const Color(0xFFE5E3E3),
-          lightGray: const Color(0xFFF5F5F5),
+          darkGray: const Color(0xFF404155),
+          gray: const Color(0xFF8D99AE),
+          lightGray: const Color(0xFFF7F7F9),
           blue: const Color(0xFF295DFF),
           lightBlue: const Color.fromARGB(255, 203, 224, 254),
           green: Color.fromARGB(255, 12, 78, 11),
